@@ -1,0 +1,3 @@
+# This laboratory work describes the work of Linear feedback shift register (LFSR)
+LFSR is used to generate the sequence of "random numbers" to cipher/uncipher text/photos/videos etc...
+cause of ciphering ceparate bits.
