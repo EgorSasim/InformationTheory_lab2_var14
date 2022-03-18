@@ -98,46 +98,42 @@ namespace lab2
         }
 
 
-        public string Str2Bin(string text)
+  
+
+        public byte[] Str2Bin(string text)
         {
-            string tmp = "";
-            
+            //return bytes of characters via unicode
+            return Encoding.Unicode.GetBytes(text);
 
-            foreach(char c in text)
-            {
-                tmp += Convert.ToString(c, 2).PadLeft(8, '0');
-            }
-
-            MessageBox.Show($"str2binOut: ", tmp);
-            return tmp;
         }
 
-        public string Ciphering(string binText, int[] register)
+ 
+        public string Ciphering(byte[] bytes, int[] register)
         {
-            string tmp = "";
-            string regTmp = "";
+            byte[] cipheredArr = new byte[bytes.Length];
             int[] CPregister = new int[36];
             register.CopyTo(CPregister, 0);
 
-          
-             for(int i = 0; i < binText.Length; i++)
-             {
+            for (int i =0; i < bytes.Length; i++)
+            {
                 ShowRegister(CPregister);
-              
-                tmp += binText[i] ^ shiftRegister(register);
-             }
+                cipheredArr[i] = (byte)(bytes[i] ^ shiftRegister(register));
+            }
 
-            MessageBox.Show($"cipherOUT: ", tmp);
-            return tmp;
+            return Encoding.Unicode.GetString(cipheredArr);
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             FillRegister(txtBoxKey.Text, REGISTER);
 
-            txtBoxCipherText.Text = Ciphering(Str2Bin("hi"), REGISTER);
-            //txtBoxCipherText.Text = Convert.ToBase64String( Str2Bin(txtBoxText.Text));
-           
+            byte[] bytes = Str2Bin(txtBoxText.Text);
+
+            txtBoxCipherText.Text = Ciphering(bytes, REGISTER);
+
+
+
+          
                        
         }
     }
